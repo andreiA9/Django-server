@@ -3,6 +3,11 @@ from django.http import HttpResponse, JsonResponse
 from rest_framework.parsers import JSONParser
 from .models import Article
 from .serializers import ArticleSerializer
+from django.views.decorators.csrf import csrf_exempt # needed for @csrf_exempt to work
+
+
+# if you do not write this when POSTING > you will receive an STATUS=501 < "Internal server error"
+@csrf_exempt
 
 # Create your views here.
 def article_list(request):
