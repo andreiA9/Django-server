@@ -17,3 +17,11 @@ class ArticleSerializer(serializers.Serializer):
         instance.date = validated_data.get("date", instance.date)
         instance.save()
         return instance
+
+# CLASA.de mai sus se simplifica la a scrie clasa de mai jos
+# < aceasta CLASA era deja implementata > pentru a fi totul mai simplu
+
+# class SimpleSerializer(serializers.ModelSerializer):
+	# class Meta:
+	# 	model = Article
+	# 	fields = ["title", "author", "email"]
