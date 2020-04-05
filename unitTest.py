@@ -1,6 +1,9 @@
 # import urllib
 # import urllib2
 from urllib.request import urlopen
+from urllib.request import Request
+from urllib.error import HTTPError
+import urllib.parse
 # CONVERSION from Python2 to Python3
 # The urllib2 module has been split across several modules in Python 3 named urllib.request and urllib.error.
 
@@ -21,16 +24,33 @@ url = 'http://127.0.0.1:8000/article/'
 # \ /
 from urllib.request import urlopen
 response = urlopen(url).read()
+# SAME as
+# response = urllib.request.urlopen(url).read()
 print(response)
 
-toJson = json.loads(response)
-print(toJson)
-print(toJson[0]['title'])
-print(toJson[1]['title'])
-print(toJson[0]['author'])
-print(toJson[1]['author'])
+
+json_object = json.loads(response)
+
+for entry in json_object:
+    # now song is a dictionary
+    for key, value in entry.items():
+        print(key, value) # example usage
+    
+    print('\n')
 
 
-# OUTPUT
-# b'[{"title": "Title1", "author": "Andrei", "email": "andrei_andreescu24@yahoo.com", "date": "2020-04-04T01:00:09.446819Z"},
-#  {"title": "Title2", "author": "George", "email": "george@yahoo.com", "date": "2020-04-04T01:04:13.394649Z"}]'
+
+# payload = b"{'title' : 'Title', 'author' : 'Andreea', 'email' : 'andreea@gmail.com' }"
+payload = {'title' : 'Title',
+          'author' : 'Andreea',
+          'email' : 'andreea@gmail.com' }
+data = urllib.parse.urlencode(payload).encode("utf-8")
+req = Request(url = url, data = data)
+
+try:
+    response = urlopen(req).read()
+    print(response.status_code)
+except HTTPError as error:
+    # Need to check its an 404, 503, 500, 403 etc.
+    print("Status code ", error.code)
+    print("Message ", error.reason)
