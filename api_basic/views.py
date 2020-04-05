@@ -6,10 +6,10 @@ from .serializers import ArticleSerializer
 from django.views.decorators.csrf import csrf_exempt # needed for @csrf_exempt to work
 
 
+# Create your views here.
+
 # if you do not write this when POSTING > you will receive an STATUS=501 < "Internal server error"
 @csrf_exempt
-
-# Create your views here.
 def article_list(request):
 	if request.method == 'GET':
 		articles = Article.objects.all()
@@ -25,5 +25,5 @@ def article_list(request):
 			return JsonResponse(serializer.data, status = 201)
 									# STATUS = 201 < 'created'
 		
-		return JsonResponse(serializer.errors, status=400)
+		return JsonResponse(serializer.errors, status = 400)
 									# STATUS = 400 < 'Bad Request'
