@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import Article
 
+# TU ai creat BAZA.de DATE cu CAMP="date" >
+# de aceea daca decomentezi acest COD nu iti va merge deloc < chiar si daca lasi comentata LINIA.cu "date"
 # class ArticleSerializer(serializers.Serializer):
 #     title = serializers.CharField(max_length=100)
 #     author = serializers.CharField(max_length=100)

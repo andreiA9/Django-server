@@ -10,4 +10,13 @@ http://127.0.0.1:8000/article/
 python .\unitTest.py
 
 https://www.youtube.com/watch?v=B38aDwUpcFc
-MINUT 41:29
+MINUT 52:00
+
+
+
+AICI ai TABELELE
+http://127.0.0.1:8000/admin/
+
+TABLE = Article         < http://127.0.0.1:8000/admin/api_basic/article/
+TABLE = Users           < http://127.0.0.1:8000/admin/auth/user/
+TABLE = Groups          < http://127.0.0.1:8000/admin/auth/group/
