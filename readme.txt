@@ -11,6 +11,7 @@ python .\unitTest.py
 
 https://www.youtube.com/watch?v=B38aDwUpcFc
 MINUT 52:00
+MINUT 01:40:00 - AUTHENTICATION
 
 
 

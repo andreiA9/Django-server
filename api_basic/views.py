@@ -14,12 +14,9 @@ from rest_framework import status
 
 
 
-# @csrf_exempt
-# def article_list(request):
-
-# if you do not write this when POSTING > you will receive an STATUS=501 < "Internal server error"
+# FUNCTION-based API-view
 @api_view(['GET', 'POST'])			# < ASTA a fost = @csrf_exempt
-def article_list(request):
+def article_list_api(request):
 	if request.method == 'GET':
 		articles = Article.objects.all()
 		serializer = ArticleSerializer(articles, many = True)
@@ -39,24 +36,54 @@ def article_list(request):
 									# STATUS = 400 < 'Bad Request'
 
 
-# @csrf_exempt(['GET', 'POST'])		# < ASTA a fost = @csrf_exempt
-# def article_list(request):
-# 	if request.method == 'GET':
-# 		articles = Article.objects.all()
-# 		serializer = ArticleSerializer(articles, many = True)
-# 		return JsonResponse(serializer.data, safe = False)
+# if you do not write this when POSTING > you will receive an STATUS=501 < "Internal server error"
+@csrf_exempt
+def article_list(request):
+	if request.method == 'GET':
+		articles = Article.objects.all()
+		serializer = ArticleSerializer(articles, many = True)
+		return JsonResponse(serializer.data, safe = False)
 	
-# 	elif request.method == 'POST':
-# 		data = JSONParser().parse(request)
-# 		serializer = ArticleSerializer(data = data)
+	elif request.method == 'POST':
+		data = JSONParser().parse(request)
+		serializer = ArticleSerializer(data = data)
 		
-# 		if serializer.is_valid():
-# 			serializer.save()
-# 			return JsonResponse(serializer.data, status = 201)
-# 									# STATUS = 201 < 'created'
+		if serializer.is_valid():
+			serializer.save()
+			return JsonResponse(serializer.data, status = 201)
+									# STATUS = 201 < 'created'
 		
-# 		return JsonResponse(serializer.errors, status = 400)
-# 									# STATUS = 400 < 'Bad Request'
+		return JsonResponse(serializer.errors, status = 400)
+									# STATUS = 400 < 'Bad Request'
+
+
+# FUNCTION-based API-view
+@api_view(['GET', 'PUT', 'DELETE'])
+def article_detail_api(request, primaryKey):
+	try:
+		article = Article.objects.get(pk = primaryKey)
+	except Article.DoesNotExist:
+		return Response(status = status.HTTP_404_NOT_FOUND)
+	
+	if request.method == 'GET':
+		serializer = ArticleSerializer(article)
+		return Response(serializer.data)
+
+	elif request.method == 'PUT':
+		serializer = ArticleSerializer(article, data = request.data)
+
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status = status.HTTP_201_CREATED)
+									# STATUS = 201 < 'created'
+		
+		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+									# STATUS = 400 < 'Bad Request'
+
+	elif request.method == 'DELETE':
+		article.delete()
+		return Response(status = status.HTTP_204_NO_CONTENT)
+									# STATUS = 204 < 'No Content'
 
 
 
@@ -93,3 +120,8 @@ def article_detail(request, primaryKey):
 # Note that because we want to be able to POST to this view from clients that won't have a CSRF token > we
 # need to mark this view as csrf_exempt. This isn't something that you'd normally want to do., and the REST
 # framework views actually use more sensible behaviour than this, but it'll do for our purposes right now
+
+
+
+
+# CLASS-based API-view
