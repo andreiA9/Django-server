@@ -6,34 +6,15 @@ from .serializers import ArticleSerializer
 
 from django.views.decorators.csrf import csrf_exempt # needed for @csrf_exempt to work
 
-# API_VIEW
+# FUNCTION-based API-view
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
+# CLASS-based API-view
+from rest_framework.views import APIView
 
 
-
-# FUNCTION-based API-view
-@api_view(['GET', 'POST'])			# < ASTA a fost = @csrf_exempt
-def article_list_api(request):
-	if request.method == 'GET':
-		articles = Article.objects.all()
-		serializer = ArticleSerializer(articles, many = True)
-		return Response(serializer.data)
-	
-	elif request.method == 'POST':
-		# NOT NEEDED when USING an API VIEW
-		# data = JSONParser().parse(request)
-		serializer = ArticleSerializer(data = request.data)
-		
-		if serializer.is_valid():
-			serializer.save()
-			return Response(serializer.data, status = status.HTTP_201_CREATED)
-									# STATUS = 201 < 'created'
-		
-		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
-									# STATUS = 400 < 'Bad Request'
 
 
 # if you do not write this when POSTING > you will receive an STATUS=501 < "Internal server error"
@@ -58,20 +39,18 @@ def article_list(request):
 
 
 # FUNCTION-based API-view
-@api_view(['GET', 'PUT', 'DELETE'])
-def article_detail_api(request, primaryKey):
-	try:
-		article = Article.objects.get(pk = primaryKey)
-	except Article.DoesNotExist:
-		return Response(status = status.HTTP_404_NOT_FOUND)
-	
+@api_view(['GET', 'POST'])			# < ASTA a fost = @csrf_exempt
+def article_list_api(request):
 	if request.method == 'GET':
-		serializer = ArticleSerializer(article)
+		articles = Article.objects.all()
+		serializer = ArticleSerializer(articles, many = True)
 		return Response(serializer.data)
-
-	elif request.method == 'PUT':
-		serializer = ArticleSerializer(article, data = request.data)
-
+	
+	elif request.method == 'POST':
+		# NOT NEEDED when USING an API VIEW
+		# data = JSONParser().parse(request)
+		serializer = ArticleSerializer(data = request.data)
+		
 		if serializer.is_valid():
 			serializer.save()
 			return Response(serializer.data, status = status.HTTP_201_CREATED)
@@ -80,10 +59,44 @@ def article_detail_api(request, primaryKey):
 		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 									# STATUS = 400 < 'Bad Request'
 
-	elif request.method == 'DELETE':
-		article.delete()
-		return Response(status = status.HTTP_204_NO_CONTENT)
-									# STATUS = 204 < 'No Content'
+
+# CLASS-based API-view
+# ASTA este IDENTICA cu FUNCTION-based API-view
+class ArticleListApiView(APIView):
+	# !!!!
+	# este identica cu FUNCTIA = article_list_api(request)
+	def get(self, request):
+		articles = Article.objects.all()
+		serializer = ArticleSerializer(articles, many = True)
+		return Response(serializer.data)
+	
+	def post(self, request):
+		serializer = ArticleSerializer(data = request.data)
+		
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status = status.HTTP_201_CREATED)
+									# STATUS = 201 < 'created'
+		
+		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+#  |
+# \ /
+# THEORY
+# REST framework provides an APIView class, which subclasses Django's View class.
+# APIView classes are different from regular View classes in the following ways:
+# 0=Requests passed to the handler methods will be REST framework's Request instances,
+#  not Django's HttpRequest instances.
+# 1=Handler methods may return REST framework's Response, instead of Django's
+#  HttpResponse. The view will manage content negotiation and setting the correct
+#  renderer on the response.
+# 2=Any APIException exceptions will be caught and mediated into appropriate
+#  responses.
+# 3=Incoming requests will be authenticated and appropriate permission and/or
+#  throttle checks will be run before dispatching the request to the handler method.
+# Using the APIView class is pretty much the same as using a regular View class, as
+#  usual, the incoming request is dispatched to an appropriate handler method such as
+#  .get() or .post().
+
 
 
 
@@ -122,6 +135,64 @@ def article_detail(request, primaryKey):
 # framework views actually use more sensible behaviour than this, but it'll do for our purposes right now
 
 
+# FUNCTION-based API-view
+@api_view(['GET', 'PUT', 'DELETE'])
+def article_detail_api(request, primaryKey):
+	try:
+		article = Article.objects.get(pk = primaryKey)
+	except Article.DoesNotExist:
+		return Response(status = status.HTTP_404_NOT_FOUND)
+	
+	if request.method == 'GET':
+		serializer = ArticleSerializer(article)
+		return Response(serializer.data)
+
+	elif request.method == 'PUT':
+		serializer = ArticleSerializer(article, data = request.data)
+
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status = status.HTTP_201_CREATED)
+									# STATUS = 201 < 'created'
+		
+		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+									# STATUS = 400 < 'Bad Request'
+
+	elif request.method == 'DELETE':
+		article.delete()
+		return Response(status = status.HTTP_204_NO_CONTENT)
+									# STATUS = 204 < 'No Content'
 
 
 # CLASS-based API-view
+# ASTA este IDENTICA cu FUNCTION-based API-view
+# MINUTUL 16
+class ArticleDetailApiView(APIView):
+	def get_object(self, id):
+		try:
+			return Article.objects.get(id = id)
+		except Article.DoesNotExist:
+			return Response(status = status.HTTP_404_NOT_FOUND)
+	
+	def get(self, request, id):
+		article = self.get_object(id = id)
+		serializer = ArticleSerializer(article)
+		return Response(serializer.data)
+	
+	def put(self, request, id):
+		article = self.get_object(id = id)
+		serializer = ArticleSerializer(article, data = request.data)
+
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status = status.HTTP_201_CREATED)
+									# STATUS = 201 < 'created'
+		
+		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+									# STATUS = 400 < 'Bad Request'
+	
+	def delete(self, request, id):
+		article = self.get_object(id = id)	
+		article.delete()
+		return Response(status = status.HTTP_204_NO_CONTENT)
+									# STATUS = 204 < 'No Content'
