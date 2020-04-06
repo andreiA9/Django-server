@@ -48,3 +48,14 @@ http://127.0.0.1:8000/genericapi/v1/detail/1/
 
 4 = AUTHENTICATION PAGE
 http://127.0.0.1:8000/genericapi/v1/detail/0/
+
+
+
+
+TUTORIALE
+SERIE.lunga
+https://www.youtube.com/channel/UCAx4nmhI7S1RcPiaG-Uw0tg
+ |
+\ /
+PART1
+https://www.youtube.com/watch?v=2_yCj2TEFW8
