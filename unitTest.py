@@ -64,3 +64,7 @@ except HTTPError as error:
     # Need to check its an 404, 503, 500, 403 etc.
     print("Status code ", error.code)
     print("Message ", error.reason)
+
+# OUTPUT
+# the inserted-ELEMENT in JSON
+# b'{"id":12,"title":"Title","author":"Andreea","email":"andreea@gmail.com","date":"2020-04-06T05:47:52.097335Z"}'
