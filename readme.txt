@@ -13,9 +13,11 @@ TUTORIAL DJANGO
 https://www.youtube.com/watch?v=B38aDwUpcFc
 MINUT 01:40:46 - basic-AUTHENTICATION
 MINUT 01:49:46 - token-AUTHENTICATION
+MINUT 1:56:18 - Viewsets & Routers
 
 
-!!!!orice SCHIMBARE in settings.py > inseamna ca va trebui sa faci 
+!!!!
+orice SCHIMBARE in settings.py > inseamna ca va trebui sa faci MIGRATE
 ! python manage.py migrate
 
 

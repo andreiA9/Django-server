@@ -28,6 +28,18 @@ OPERATII.pe BAZA=DATE
  	-> detail/int/  < PUT va inlocui ELEMENTUL.curent
 
 
+
+
+-APELURILE de[POST/GET]din COD pot fi facute doar la URL ul.de
+ API="api/v1")-(@Corinaaici TU ai facut un POST la un URL.de API>incat ai primit
+ inapoi ELEMENTUL inserat in BAZA=DATE)
+-se pot face request uri si la URL uri care nu au API uri in ele!dar atunci
+ vei primi o PAGINA=HTML)-(apoi va trebui sa inspectezi PANIGA pentru a
+ gasi un FORM>acolo vei gasi RASPUNSUL la OPERATIA=POST<pe care ai facut o
+ TU)
+
+
+
 INSTRUCTIONS
 POSTMAN
 

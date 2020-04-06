@@ -1,3 +1,6 @@
+# !!!!
+# NOT WORKING
+
 import urllib.request
 import urllib.response
 from urllib.request import HTTPPasswordMgrWithDefaultRealm
@@ -13,16 +16,17 @@ loginUrl = 'http://127.0.0.1:8000/genericapi/v1/detail/0/'
 passwordManager = urllib.request.HTTPPasswordMgrWithDefaultRealm()
 passwordManager.add_password(None, loginUrl, userName, passWord)
 
-# create an authorization handler
-auth_handler = HTTPBasicAuthHandler(passwordManager)
+# # create an authorization handler
+# auth_handler = HTTPBasicAuthHandler(passwordManager)
 opener = urllib.request.build_opener(auth_handler)
 
 # OPEN the URL = use the opener to fetch a URL
-# opener.open(loginUrl)
+opener.open(loginUrl)
 
 # Install the opener.
 # Now all calls to urllib.request.urlopen use our opener.
 urllib.request.install_opener(opener)
+
 
 try:
     # VARIANTA1

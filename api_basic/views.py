@@ -18,9 +18,13 @@ from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework import mixins
 
-# SESSION AUTHENTICATION
+# [BASIC/SESSION]AUTHENTICATION
 from rest_framework.authentication import SessionAuthentication	# AUTHENTICATION
 from rest_framework.authentication import BasicAuthentication	# AUTHENTICATION
+from rest_framework.permissions import IsAuthenticated			# PERMISSIONS
+
+# TOKEN-AUTHENTICATION
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated			# PERMISSIONS
 
 
@@ -221,11 +225,16 @@ class GenericApiView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Crea
 	#asta este pentru put() < pentru ca avea nevoie de primaryKey
 	lookup_field = 'id'
 
-	# AUTHENTICATION < aici sunt amandoua [SessionAuthentication, BasicAuthentication]
+	# basic-AUTHENTICATION < aici sunt amandoua [SessionAuthentication, BasicAuthentication]
 	# this means that it will be searched for a SessionAuthentication <
 	# if this is not found > then it will be used the BasicAuthentication
-	authentication_classes = [SessionAuthentication, BasicAuthentication] 	# = LIST
-	permission_classes = [IsAuthenticated]									# = LIST
+	# CODE
+	# authentication_classes = [SessionAuthentication, BasicAuthentication] 	# este obligatoriu sa ai "[]"
+	# permission_classes = [IsAuthenticated]									# este obligatoriu sa ai "[]"
+
+	# token-AUTHENTICATION < 
+	authentication_classes = [TokenAuthentication]		# este obligatoriu sa ai "[]"
+	permission_classes = [IsAuthenticated]				# este obligatoriu sa ai "[]"
 
 	def get(self, request, id = None):
 		# localhost:8000/genericapi/v1/detail/1/ < this can be any number
