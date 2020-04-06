@@ -1,61 +1,37 @@
-from urllib.request import urlopen
-from urllib.request import build_opener
-from urllib.request import install_opener
+import urllib.request
+import urllib.response
+from urllib.request import HTTPPasswordMgrWithDefaultRealm
 from urllib.request import HTTPBasicAuthHandler
 from urllib.request import HTTPError
 
+
+userName = "andrei"
+passWord  = "00aaa!!!"
 loginUrl = 'http://127.0.0.1:8000/genericapi/v1/detail/0/'
 
-auth_handler = HTTPBasicAuthHandler()
-auth_handler.add_password(realm = loginUrl,
-                         uri = '',
-                         user = 'andrei',
-                         passwd = '00aaa!!!')
+# create a password manager
+passwordManager = urllib.request.HTTPPasswordMgrWithDefaultRealm()
+passwordManager.add_password(None, loginUrl, userName, passWord)
 
-opener = build_opener(auth_handler)
-install_opener(opener)
+# create an authorization handler
+auth_handler = HTTPBasicAuthHandler(passwordManager)
+opener = urllib.request.build_opener(auth_handler)
+
+# OPEN the URL = use the opener to fetch a URL
+# opener.open(loginUrl)
+
+# Install the opener.
+# Now all calls to urllib.request.urlopen use our opener.
+urllib.request.install_opener(opener)
+
 try:
-    responseString = urlopen(loginUrl).read()
-    print(responseString)
+    # VARIANTA1
+    request = urllib.request.Request('http://127.0.0.1:8000/genericapi/v1/detail/0/', headers={'Content-Type': 'application/json'})
+    # request = urllib.request.Request('http://127.0.0.1:8000/genericapi/v1/detail/0/')
+    result = opener.open(request)
+    messages = result.read()
+    print (messages)
+
 except HTTPError as error:
     print(error.code)
     print(error.reason)
-
-
-
-# from requests.auth import HTTPBasicAuth
-# # requests.get('https://api.github.com/user', auth=HTTPBasicAuth('user', 'pass'))
-# responseString = requests.get(loginUrl, auth=HTTPBasicAuth('andrei', '00aaa!!!'))
-# print(responseString)
-
-
-# import urllib.request
-# import urllib.response
-
-# userName = "andrei"
-# passWord  = "00aaa!!!"
-# loginUrl = 'http://127.0.0.1:8000/genericapi/v1/detail/0/'
-
-# # create an authorization handler
-# passwordManager = urllib.request.HTTPPasswordMgrWithDefaultRealm()
-# passwordManager.add_password(None, loginUrl, userName, passWord)
-
-# auth_handler = urllib.request.HTTPBasicAuthHandler(passwordManager)
-# opener = urllib.request.build_opener(auth_handler)
-
-# urllib.request.install_opener(opener)
-# # try:
-# #     responseString = urlopen(loginUrl).read()
-# #     print(responseString)
-# # except HTTPError as error:
-# #     print(error.code)
-# #     print(error.reason)
-
-# DATA = b'{"data": { "foo": "bar", "timestamp": 1466593290 }}'
-# try:
-#     req = urllib.request.Request('http://127.0.0.1:8000/genericapi/v1/detail/0/', data=DATA, headers={'Content-Type': 'application/json'})    
-#     result = opener.open(req)
-#     messages = result.read()
-#     print (messages)
-# except IOError as e:
-#     print (e)

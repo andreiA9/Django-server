@@ -221,7 +221,7 @@ class GenericApiView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Crea
 	#asta este pentru put() < pentru ca avea nevoie de primaryKey
 	lookup_field = 'id'
 
-	# AUTHENTICATION
+	# AUTHENTICATION < aici sunt amandoua [SessionAuthentication, BasicAuthentication]
 	# this means that it will be searched for a SessionAuthentication <
 	# if this is not found > then it will be used the BasicAuthentication
 	authentication_classes = [SessionAuthentication, BasicAuthentication] 	# = LIST

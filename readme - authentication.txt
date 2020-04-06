@@ -19,10 +19,12 @@ THEORY
 
 2=token-AUTHENTICATION
 THEORY
--(this authetication scheme uses a simple token-based
- HTTP Authentication scheme)-(token-AUTHENTICATION is
- appropiate for client-server setups<such as native-
- DESKTOP and MOBILE-CLIENTS)
+-(this authetication scheme uses a simple token-based HTTP
+ Authentication scheme)-(token-AUTHENTICATION is appropiate
+ for client-server setups<such as native-DESKTOP and MOBILE-
+ CLIENTS)=>(deci cea de la DRS Django Frontend nu poate sa
+ fie[BasicAuthentication/SessionAuthentication]<pentru ca
+ este CLIENT=DESKTOP-BROWSER)
 
 
 
