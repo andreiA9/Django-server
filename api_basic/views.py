@@ -18,6 +18,15 @@ from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework import mixins
 
+# [BASIC/SESSION]AUTHENTICATION
+from rest_framework.authentication import SessionAuthentication	# AUTHENTICATION
+from rest_framework.authentication import BasicAuthentication	# AUTHENTICATION
+from rest_framework.permissions import IsAuthenticated			# PERMISSIONS
+
+# TOKEN-AUTHENTICATION
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated			# PERMISSIONS
+
 
 
 # if you do not write this when POSTING > you will receive an STATUS=501 < "Internal server error"
@@ -216,11 +225,24 @@ class GenericApiView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Crea
 	#asta este pentru put() < pentru ca avea nevoie de primaryKey
 	lookup_field = 'id'
 
+	# basic-AUTHENTICATION < aici sunt amandoua [SessionAuthentication, BasicAuthentication]
+	# this means that it will be searched for a SessionAuthentication <
+	# if this is not found > then it will be used the BasicAuthentication
+	# CODE
+	# authentication_classes = [SessionAuthentication, BasicAuthentication] 	# este obligatoriu sa ai "[]"
+	# permission_classes = [IsAuthenticated]									# este obligatoriu sa ai "[]"
+
+	# token-AUTHENTICATION < 
+	authentication_classes = [TokenAuthentication]		# este obligatoriu sa ai "[]"
+	permission_classes = [IsAuthenticated]				# este obligatoriu sa ai "[]"
+
 	def get(self, request, id = None):
+		# localhost:8000/genericapi/v1/detail/1/ < this can be any number
 		if id:
 			return self.retrieve(request)
 		
 		# in CAZUL.acesta ti le va arata pe toate
+		# localhost:8000/genericapi/v1/detail/0/
 		elif id == 0:
 			return self.list(request)
 	

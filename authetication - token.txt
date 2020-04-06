@@ -1,0 +1,87 @@
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',	----------------------------|
+    'django.contrib.sessions',									|
+    'django.contrib.messages',									|
+    'django.contrib.staticfiles',								|
+    'rest_framework',       # FOR DJANGO REST FRAMEWORK			|
+    # for token authentication									|
+    'rest_framework.authtoken',	 -------------------|			|
+    'api_basic',	----------------|				|			|
+]									|				|			|
+									|				|			|
+									|				|			|
+									|				|			|
+Operations to perform:			   \ /			   \ /		   \ /
+  Apply all migrations: admin, api_basic, auth, authtoken, contenttypes, sessions
+Running migrations:
+  Applying authtoken.0001_initial... OK
+  Applying authtoken.0002_auto_20160226_1747... OK
+ |
+\ /
+deci aici
+'rest_framework.authtoken'
+ |
+INSEAMNA ca au fost
+adaugate 2MODULE de authtoken
+\ /
+Applying authtoken.0001_initial... OK
+Applying authtoken.0002_auto_20160226_1747... OK
+
+
+ |
+\ /
+http://127.0.0.1:8000/admin/
+aici vei avea
+AUTH TOKEN
+	-> Tokens
+
+
+
+
+INSTRUCTIONS
+CREATE+TOKEN
+	-> click=Tokens -> click=add Token -> choose user=Andrei -> click=Save
+
+
+
+INSTRUCTION
+POSTMAN\AUTHETICATION
+
+select=GET
+0 = in Postman
+	-> tab=Headers -> KEY = Authorization
+				         -> VALUE = Token   <---------------------|
+  -> tab=Authorization                                    |
+    -> TYPE=Inherit from parent                           |
+2 = in your SITE                                          |
+	-> from the ADMIN URL                                   |
+  http://127.0.0.1:8000/admin/authtoken/token/            |
+  COPY the TOKEN                                          |
+  Key = ff74d9307bfd1179c1df13443dbbd38fbe525d5d          |
+                                                  |-------|
+  TO the Postman                                  |
+  VALUE = "Token ff74d9307bfd1179c1df13443dbbd38fbe525d5d"
+
+
+
+
+STATUS CODES for AUTHENTICATION
+
+NO-AUTHENTICATION
+authenticate using 		-> Status=403 < 'Forbidden', 'Authentication credentials were not provided.'TYPE=Inherit Auth from parent
+Inherit auth from parent
+ERROR
+"detail": "Authentication credentials were not provided."
+
+
+BASIC-AUTHENTICATION
+authenticate using 		-> Status=200 < 'OK'
+TYPE=Basic Auth
+
+
+TOKEN-AUTHENTICATION
+authenticate using 		-> 401 < 'Unauthorized'
+Inherit auth from parent
+!BUT inser TOKEN in Headers
