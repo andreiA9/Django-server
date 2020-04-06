@@ -6,14 +6,17 @@ from .serializers import ArticleSerializer
 
 from django.views.decorators.csrf import csrf_exempt # needed for @csrf_exempt to work
 
-# FUNCTION-based API-view
+# FUNCTION-based API-VIEW
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
-# CLASS-based API-view
+# CLASS-based API-VIEW
 from rest_framework.views import APIView
 
+# GENERIC-VIEW
+from rest_framework import generics
+from rest_framework import mixins
 
 
 
@@ -196,3 +199,36 @@ class ArticleDetailApiView(APIView):
 		article.delete()
 		return Response(status = status.HTTP_204_NO_CONTENT)
 									# STATUS = 204 < 'No Content'
+
+
+# mixins.ListModelMixin 	-> pentru self.list() din get()			< iti apare GET in API-VIEW
+# mixins.RetrieveModelMixin -> pentru self.retrieve() din get()
+# mixins.CreateModelMixin	-> pentru self.create() din post()		< iti apare POST in API-VIEW
+# mixins.UpdateModelMixin 	-> pentru self.update() din put()		< iti apare POST in API-VIEW
+# mixins.DestroyModelMixin 	-> pentru self.retrieve() din delete()	< 
+class GenericApiView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin,
+					mixins.UpdateModelMixin, mixins.RetrieveModelMixin,
+					mixins.DestroyModelMixin):
+	serializer_class = ArticleSerializer
+	
+	# asta este pentru [get() / post()]
+	queryset = Article.objects.all()	# aici in TUTORIAL era "query_set" < pentru ca au mai schimbat ceva
+	#asta este pentru put() < pentru ca avea nevoie de primaryKey
+	lookup_field = 'id'
+
+	def get(self, request, id = None):
+		if id:
+			return self.retrieve(request)
+		
+		# in CAZUL.acesta ti le va arata pe toate
+		elif id == 0:
+			return self.list(request)
+	
+	def post(self, request):
+		return self.create(request)
+	
+	def put(self, request, id = None):
+		return self.update(request, id)
+	
+	def detele(self, request, id = None):
+		return self.destroy(request, id)
