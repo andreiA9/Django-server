@@ -9,7 +9,10 @@ import urllib.parse
 
 import json
 
-url = 'http://127.0.0.1:8000/article/'
+# trebuie neaparat LINK ul de API
+# url = 'http://127.0.0.1:8000/article/'
+url = 'http://127.0.0.1:8000/api/v1/article/'
+
 # values = {'name' : 'Michael Foord',
 #           'location' : 'Northampton',
 #           'language' : 'Python' }
@@ -23,20 +26,26 @@ url = 'http://127.0.0.1:8000/article/'
 # BECOMES
 # \ /
 from urllib.request import urlopen
-response = urlopen(url).read()
-# SAME as
-# response = urllib.request.urlopen(url).read()
-print(response)
 
+try:
+    response = urlopen(url).read()
+    # print(response.status_code)
+    print(response)
 
-json_object = json.loads(response)
+    json_object = json.loads(response)
 
-for entry in json_object:
-    # now song is a dictionary
-    for key, value in entry.items():
-        print(key, value) # example usage
-    
-    print('\n')
+    for entry in json_object:
+        # now song is a dictionary
+        for key, value in entry.items():
+            print(key, value) # example usage
+        
+        print('\n')
+
+except HTTPError as error:
+    # Need to check its an 404, 503, 500, 403 etc.
+    print("Status code ", error.code)
+    print("Message ", error.reason)
+
 
 
 
@@ -49,7 +58,8 @@ req = Request(url = url, data = data)
 
 try:
     response = urlopen(req).read()
-    print(response.status_code)
+    # print(response.status_code)
+    print(response)
 except HTTPError as error:
     # Need to check its an 404, 503, 500, 403 etc.
     print("Status code ", error.code)
