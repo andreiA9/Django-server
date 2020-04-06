@@ -10,8 +10,7 @@ http://127.0.0.1:8000/article/
 python .\unitTest.py
 
 https://www.youtube.com/watch?v=B38aDwUpcFc
-MINUT 01:21 < ai terminat cu ARTICLEAPIDETAIL
-MINUT 01:40:00 - AUTHENTICATION
+MINUT 01:49:46 - AUTHENTICATION
 
 
 URL urile sunt:
@@ -39,3 +38,6 @@ http://127.0.0.1:8000/api/v1/detail/4/
 2 = CLASS-based API-view
 http://127.0.0.1:8000/classapi/v1/article/
 http://127.0.0.1:8000/classapi/v1/detail/2/
+
+3 = GENERIC API-view
+http://127.0.0.1:8000/genericapi/v1/detail/1/

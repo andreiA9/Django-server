@@ -26,3 +26,22 @@ OPERATII.pe BAZA=DATE
     
 2 = PUT (de jos) = PUT pe un ELEMENT
  	-> detail/int/  < PUT va inlocui ELEMENTUL.curent
+
+
+INSTRUCTIONS
+POSTMAN
+
+at GET
+0 = choose=GET
+1 = click=Send
+    -> check=Status
+    -> find RESULTS at tab=Params
+
+at POST
+0 = choose=POST
+1 = tab=Body
+    -> check=raw
+    -> choose=JSON
+2 = click=Send
+    -> check=Status
+    -> find RESULTS at tab=Params
