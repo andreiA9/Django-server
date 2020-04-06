@@ -39,3 +39,6 @@ http://127.0.0.1:8000/api/v1/detail/4/
 2 = CLASS-based API-view
 http://127.0.0.1:8000/classapi/v1/article/
 http://127.0.0.1:8000/classapi/v1/detail/2/
+
+3 = GENERIC API-view
+http://127.0.0.1:8000/genericapi/v1/detail/1/
