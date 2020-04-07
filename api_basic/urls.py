@@ -8,6 +8,10 @@ from .views import ArticleListApiView, ArticleDetailApiView
 # GENERIC-VIEW
 from .views import GenericApiView
 
+# LOGIN-VIEW
+# from django.contrib.auth.views import LoginView
+from .views import CustomLoginView
+
 urlpatterns = [
 	path('article/', article_list),
 	path('api/v1/article/', article_list_api),
@@ -16,4 +20,5 @@ urlpatterns = [
 	path('api/v1/detail/<int:primaryKey>/', article_detail_api),
 	path('classapi/v1/detail/<int:id>/', ArticleDetailApiView.as_view()),
 	path('genericapi/v1/detail/<int:id>/', GenericApiView.as_view()),
+	path('login/', CustomLoginView.as_view(), name = 'login'), # daca nu pui name = 'login' > vei primi EROARE din BROWSER
 ]

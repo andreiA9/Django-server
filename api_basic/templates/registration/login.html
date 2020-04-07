@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<style>
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+</style>
+<body>
+
+<div>
+  <!-- ASTA era inainte
+  <form>
+    <label>Username</label>
+    <intput type="text">
+    
+    <label>Password</label>
+    <input type="password">
+    
+    <input type="submit" value="Login">
+  </form>
+  -->
+                        <!-- action="{}" < inseamna ca ACTIUNEA este de la Django = adica path('login/', LoginView.as_view()), -->
+  <form method="POST" action="{% url 'login' %}">
+    {% csrf_token %}    <!-- daca nu adaugi asta > vei primi "Forbidden (403) CSRF verification failed. Request aborted." -->
+    
+    {{ form.errors }}   <!-- asta iti arata ERORILE, daca nu ai completat field ul -->
+
+    <!-- ASTEA sunt puse aici ca sa iti faca legatura cu Django\username = ADMIN -->
+    {{ form.username.label_tag }}   <!--  <label>Username</label>   -->
+    {{ form.username }}             <!--  <intput type="text">      -->
+
+    {{ form.password.label_tag }}   <!--  <label>Password</label>   -->
+    {{ form.password }}             <!--  <input type="password">   -->
+
+    <input type="submit" value="Login">
+  </form>
+</div>
+
+</body>
+</html>
