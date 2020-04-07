@@ -1,41 +1,24 @@
-# !!!!
-# NOT WORKING
-
 import urllib.request
 import urllib.response
-from urllib.request import HTTPPasswordMgrWithDefaultRealm
-from urllib.request import HTTPBasicAuthHandler
 from urllib.request import HTTPError
-
+# LINIE FOARTE IMPORTANTA
+from base64 import b64encode
 
 userName = "andrei"
 passWord  = "00aaa!!!"
 loginUrl = 'http://127.0.0.1:8000/genericapi/v1/detail/0/'
 
-# create a password manager
-passwordManager = urllib.request.HTTPPasswordMgrWithDefaultRealm()
-passwordManager.add_password(None, loginUrl, userName, passWord)
 
-# # create an authorization handler
-# auth_handler = HTTPBasicAuthHandler(passwordManager)
-opener = urllib.request.build_opener(auth_handler)
+#we need to base 64 encode it 
+#and then decode it to acsii as python 3 stores it as a byte string
+credentials = b64encode(b"andrei:00aaa!!!").decode("ascii")
+headers = { 'Authorization' : 'Basic %s' %  credentials }
 
-# OPEN the URL = use the opener to fetch a URL
-opener.open(loginUrl)
-
-# Install the opener.
-# Now all calls to urllib.request.urlopen use our opener.
-urllib.request.install_opener(opener)
-
+request = urllib.request.Request(url = loginUrl, headers = headers)
 
 try:
-    # VARIANTA1
-    request = urllib.request.Request('http://127.0.0.1:8000/genericapi/v1/detail/0/', headers={'Content-Type': 'application/json'})
-    # request = urllib.request.Request('http://127.0.0.1:8000/genericapi/v1/detail/0/')
-    result = opener.open(request)
-    messages = result.read()
-    print (messages)
-
+    response = urllib.request.urlopen(request).read()
+    print(response)
 except HTTPError as error:
-    print(error.code)
-    print(error.reason)
+    print("Status code ", error.code)
+    print("Message ", error.reason)

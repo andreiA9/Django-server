@@ -52,6 +52,7 @@ http://127.0.0.1:8000/genericapi/v1/detail/0/
 
 
 
+
 TUTORIALE
 SERIE.lunga
 https://www.youtube.com/channel/UCAx4nmhI7S1RcPiaG-Uw0tg
