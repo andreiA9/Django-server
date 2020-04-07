@@ -27,8 +27,6 @@ from rest_framework.permissions import IsAuthenticated			# PERMISSIONS
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated			# PERMISSIONS
 
-# LOGIN-VIEW
-from django.contrib.auth.views import LoginView
 
 
 
@@ -257,8 +255,3 @@ class GenericApiView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Crea
 	
 	def detele(self, request, id = None):
 		return self.destroy(request, id)
-
-
-
-class CustomLoginView(LoginView):
-	member = "mama"

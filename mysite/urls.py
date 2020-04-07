@@ -23,5 +23,6 @@ from django.db import models
 # SETTING
 urlpatterns = [
 	path('admin/', admin.site.urls),
-	path('', include('api_basic.urls'))
+	path('', include('api_basic.urls')),
+    path('', include('authentication.urls')),
 ]
