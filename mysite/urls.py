@@ -23,6 +23,8 @@ from django.db import models
 # SETTING
 urlpatterns = [
 	path('admin/', admin.site.urls),
+    # here '' = ROOT < toate vor fi sub ROOT
 	path('', include('api_basic.urls')),
+    # here '' = ROOT < toate vor fi sub ROOT
     path('', include('authentication.urls')),
 ]

@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html>
+
+<head>
+  <link rel="stylesheet" href="main.css">
+</head>
+
 <style>
 input[type=text], input[type=password] {
     width: 100%;
@@ -46,18 +51,30 @@ div {
     <input type="submit" value="Login">
   </form>
   -->
-                        <!-- action="{}" < inseamna ca ACTIUNEA este de la Django = adica path('login/', LoginView.as_view()), -->
+  <!-- action="{}" < inseamna ca ACTIUNEA este de la Django = adica 
+  path('login/', views.CustomLoginView.as_view(), name = 'login'),
+  name = 'login' == action="{% url 'login' %}" -->
   <form method="POST" action="{% url 'login' %}">
     {% csrf_token %}    <!-- daca nu adaugi asta > vei primi "Forbidden (403) CSRF verification failed. Request aborted." -->
     
     {{ form.errors }}   <!-- asta iti arata ERORILE, daca nu ai completat field ul -->
+    <!-- SAU ASA
+    {% if from.errors %}
+      <p>There is something wrong with username/passsword.</p>
+    {% endif %} -->
 
     <!-- ASTEA sunt puse aici ca sa iti faca legatura cu Django\username = ADMIN -->
-    {{ form.username.label_tag }}   <!--  <label>Username</label>   -->
-    {{ form.username }}             <!--  <intput type="text">      -->
+    <p>Username: {{ form.username }}</p>
+    <!--  <label>Username</label>   -->
+    <!--  <intput type="text">      -->
 
-    {{ form.password.label_tag }}   <!--  <label>Password</label>   -->
-    {{ form.password }}             <!--  <input type="password">   -->
+    <p>Password: {{ form.password }}</p>
+    <!--  <label>Password</label>   -->
+    <!--  <input type="password">   -->
+
+    {% if next %}   <!-- adica daca ai un LOGIN_REDIRECT_URL -->
+    <p>You cannot acces that page</p>
+    {% endif %}
 
     <input type="submit" value="Login">
   </form>

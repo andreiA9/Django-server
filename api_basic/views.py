@@ -4,7 +4,8 @@ from rest_framework.parsers import JSONParser
 from .models import Article
 from .serializers import ArticleSerializer
 
-from django.views.decorators.csrf import csrf_exempt # needed for @csrf_exempt to work
+# @csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 
 # FUNCTION-based API-VIEW
 from rest_framework.decorators import api_view
