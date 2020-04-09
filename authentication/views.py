@@ -15,17 +15,37 @@ from django.contrib.auth import login
 
 
 
-class CustomLoginView(LoginView):
+class MyLoginView(LoginView):
 	member = "mama"
 
-    # if request.method == "POST":
-    #     username = form.cleaned_data['username']
-    #     password = form.cleaned_data['password']
 
-    #     user = authenticate(username=username, password=password)
-    #     login(request, user)
-        
-    #     return redirect('home')
+
+
+class CustomLoginView(LoginView):
+
+    def get(self, request):
+        form = self.get_form()
+        args = {'form' : form}
+        return render(request, 'registration/customlogin.html', args)
+
+    def post(self, request):
+        username = request.POST.get('username', None)
+        password = request.POST.get('password', None)
+
+        file = open("output.txt", 'w')
+        file.write("register username: %s \n" % username)
+        file.write("register password: %s \n" % password)
+        file.close()
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            # login() saves the user’s ID in the session, using Django’s session framework.
+            login(request, user)
+
+            # return HttpResponse
+            return redirect('home') # cauta name='home'
+        else:
+            return HttpResponse(status = 403)
 
 
 
@@ -44,13 +64,20 @@ def register(request):
             # password = request.data['password']
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1'] # aici sunt 2PAROLE in REGISTER.FORM
+
+            file = open("output.txt", 'w')
+            file.write("register username: ", username)
+            file.write("register password: ", password)
+            file.close()
+
             # dai Inspect pe PAGINA=register.html
             # <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1">
 
             user = authenticate(username=username, password=password)
-            login(request, user)
-            # return HttpResponse
-            return redirect('home') # cauta name='home'
+            if user is not None:
+                login(request, user)
+                # return HttpResponse
+                return redirect('home') # cauta name='home'
         
         return HttpResponse(status = 403)
     

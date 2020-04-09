@@ -29,6 +29,11 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated			# PERMISSIONS
 
 
+# article_list with FUNCTION
+# JSONParser().parse(request)	----------------|
+# is the same as								|
+# serializer = ArticleSerializer(article)		|
+# serialize.data	<---------------------------|
 
 
 # if you do not write this when POSTING > you will receive an STATUS=501 < "Internal server error"
@@ -41,6 +46,14 @@ def article_list(request):
 	
 	elif request.method == 'POST':
 		data = JSONParser().parse(request)
+
+		# DEBUGGING
+		file = open("output.txt", 'w')
+		file.write("serializer.data (JSON): ")
+		stringData = json.dumps(data)
+		file.write(stringData)
+		file.close()
+
 		serializer = ArticleSerializer(data = data)
 		
 		if serializer.is_valid():
@@ -112,7 +125,7 @@ class ArticleListApiView(APIView):
 #  .get() or .post().
 
 
-
+import json
 
 # FUNCTION-based API-view
 @csrf_exempt
@@ -124,6 +137,14 @@ def article_detail(request, primaryKey):
 	
 	if request.method == 'GET':
 		serializer = ArticleSerializer(article)
+
+		# DEBUGGING
+		file = open("output.txt", 'w')
+		file.write("serializer.data (JSON): ")
+		stringData = json.dumps(serializer.data)
+		file.write(stringData)
+		file.close()
+
 		return JsonResponse(serializer.data)
 
 	elif request.method == 'PUT':
@@ -132,6 +153,14 @@ def article_detail(request, primaryKey):
 
 		if serializer.is_valid():
 			serializer.save()
+
+			# DEBUGGING
+			file = open("output.txt", 'w')
+			file.write("serializer.data (JSON): ")
+			stringData = json.dumps(serializer.data)
+			file.write(stringData)
+			file.close()
+
 			return JsonResponse(serializer.data, status = 201)
 									# STATUS = 201 < 'created'
 		
@@ -159,6 +188,7 @@ def article_detail_api(request, primaryKey):
 	
 	if request.method == 'GET':
 		serializer = ArticleSerializer(article)
+
 		return Response(serializer.data)
 
 	elif request.method == 'PUT':
@@ -166,6 +196,7 @@ def article_detail_api(request, primaryKey):
 
 		if serializer.is_valid():
 			serializer.save()
+
 			return Response(serializer.data, status = status.HTTP_201_CREATED)
 									# STATUS = 201 < 'created'
 		
@@ -191,6 +222,7 @@ class ArticleDetailApiView(APIView):
 	def get(self, request, id):
 		article = self.get_object(id = id)
 		serializer = ArticleSerializer(article)
+
 		return Response(serializer.data)
 	
 	def put(self, request, id):
@@ -224,8 +256,10 @@ class GenericApiView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Crea
 	
 	# asta este pentru [get() / post()]
 	queryset = Article.objects.all()	# aici in TUTORIAL era "query_set" < pentru ca au mai schimbat ceva
-	#asta este pentru put() < pentru ca avea nevoie de primaryKey
-	lookup_field = 'id'
+	# asta este pentru put() < pentru ca avea nevoie de primaryKey
+	# path('genericapi/v1/detail/<int:id>/'
+	# inseamna ca iti va lua id din <int:id> ---|
+	lookup_field = 'id'	# <---------------------|
 
 	# basic-AUTHENTICATION < aici sunt amandoua [SessionAuthentication, BasicAuthentication]
 	# this means that it will be searched for a SessionAuthentication <

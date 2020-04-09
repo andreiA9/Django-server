@@ -38,23 +38,17 @@ div {
 }
 </style>
 <body>
-    <h1>Login page!</h1>
+    <h1>Custom login page!</h1>
+
 <div>
-    <!-- ASTA era inainte
-    <form>
-        <label>Username</label>
-        <intput type="text">
-        
-        <label>Password</label>
-        <input type="password">
-        
-        <input type="submit" value="Login">
-    </form>
-    -->
+    <!-- !!!! IMPORTANT
+    FISIERUL.acesta este identic cu login.html -->
+
+
     <!-- action="{}" < inseamna ca ACTIUNEA este de la Django = adica 
-    path('login/', views.CustomLoginView.as_view(), name = 'login'),
-    name = 'login' == action="{% url 'login' %}" -->
-    <form method="POST" action="{% url 'login' %}">
+    path('customlogin/', views.CustomLoginView.as_view(), name = 'customlogin'),
+    name = 'customlogin' == action="{% url 'customlogin' %}" -->
+    <form method="POST" action="{% url 'customlogin' %}">
         {% csrf_token %}    <!-- daca nu adaugi asta > vei primi "Forbidden (403) CSRF verification failed. Request aborted." -->
         
         {{ form.errors }}   <!-- asta iti arata ERORILE, daca nu ai completat field ul -->

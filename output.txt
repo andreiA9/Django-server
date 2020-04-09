@@ -1,0 +1,2 @@
+register username: andrei 
+register password: 00aaa!!! 
