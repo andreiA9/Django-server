@@ -20,7 +20,7 @@
         {% if user.is_authenticated %}
             <button type="submit">Logout</button>
         {% else %}
-            <a href="login/">Login here</a>
+            <a href="{% url 'login' %}">Login here</a>
         {% endif %}
     </form>
 </body>

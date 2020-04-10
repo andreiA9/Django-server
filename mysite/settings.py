@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    # for CSS FILES
     'django.contrib.staticfiles',
     # USER AUTHENTICATION < added automatically
     'django.contrib.auth',
@@ -46,6 +47,16 @@ INSTALLED_APPS = [
     'api_basic',
     'authentication',
 ]
+
+
+# STATIC FILES (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "assets"),
+    os.path.join(BASE_DIR, "assets/registration"),
+]
+# END STATIC FILES
 
 
 MIDDLEWARE = [

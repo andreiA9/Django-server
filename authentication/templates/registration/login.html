@@ -2,96 +2,70 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="main.css">
+    <!-- GRESIT
+    <link rel="stylesheet" href="main.css"> -->
+    <!-- <link rel="stylesheet" href="/assets/registration/main.css"> -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login.css' %}">
 </head>
 
-<style>
-input[type=text], input[type=password] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-input[type=submit] {
-    width: 100%;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-input[type=submit]:hover {
-    background-color: #45a049;
-}
-
-div {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
-}
-</style>
 <body>
-    <h1>Login page!</h1>
-<div>
-    <!-- ASTA era inainte
-    <form>
-        <label>Username</label>
-        <intput type="text">
-        
-        <label>Password</label>
-        <input type="password">
-        
-        <input type="submit" value="Login">
-    </form>
-     |
-    \ /
-    a fost INLOCUIT cu ce este mai jos<
-    pentru ca nu poti sa transmiti
-    form.username
-    form.password
-    la COD=DJANGO
-    -->
+    <div>
+        <h1>Login page!</h1>
+    </div>
+    
+    <div>
+        <!-- ASTA era inainte
+        <form>
+            <label>Username</label>
+            <intput type="text">
+            
+            <label>Password</label>
+            <input type="password">
+            
+            <input type="submit" value="Login">
+        </form>
+        |
+        \ /
+        a fost INLOCUIT cu ce este mai jos<
+        pentru ca nu poti sa transmiti
+        form.username
+        form.password
+        la COD=DJANGO
+        -->
 
 
 
-    <!-- action="{}" < inseamna ca ACTIUNEA este de la Django = adica 
-    path('login/', views.CustomLoginView.as_view(), name = 'login'),
-    name = 'login' == action="{% url 'login' %}" -->
-    <form method="POST" action="{% url 'login' %}">
-        {% csrf_token %}    <!-- daca nu adaugi asta > vei primi "Forbidden (403) CSRF verification failed. Request aborted." -->
-        
-        {{ form.errors }}   <!-- asta iti arata ERORILE, daca nu ai completat field ul -->
-        <!-- SAU ASA
-        {% if from.errors %}
-          <p>There is something wrong with username/passsword.</p>
-        {% endif %} -->
+        <!-- action="{}" < inseamna ca ACTIUNEA este de la Django = adica 
+        path('login/', views.CustomLoginView.as_view(), name = 'login'),
+        name = 'login' == action="{% url 'login' %}" -->
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}    <!-- daca nu adaugi asta > vei primi "Forbidden (403) CSRF verification failed. Request aborted." -->
+            
+            {{ form.errors }}   <!-- asta iti arata ERORILE, daca nu ai completat field ul -->
+            <!-- SAU ASA
+            {% if from.errors %}
+              <p>There is something wrong with username/passsword.</p>
+            {% endif %} -->
 
-        <!-- ASTEA sunt puse aici ca sa iti faca legatura cu Django\username = ADMIN -->
-        <p>Username: {{ form.username }}</p>
-        <!--  <label>Username</label>   -->
-        <!--  <intput type="text">      -->
+            <!-- ASTEA sunt puse aici ca sa iti faca legatura cu Django\username = ADMIN -->
+            <p>Username: {{ form.username }}</p>
+            <!--  <label>Username</label>   -->
+            <!--  <intput type="text">      -->
 
-        <p>Password: {{ form.password }}</p>
-        <!--  <label>Password</label>   -->
-        <!--  <input type="password">   -->
+            <p>Password: {{ form.password }}</p>
+            <!--  <label>Password</label>   -->
+            <!--  <input type="password">   -->
 
-        <input type="submit" value="Login">
-        <!-- cand apesi Login > se va trimit REQUEST POST de la
-        <form method="POST" action="{% url 'login' %}"> -->
-        
-        
-        
-        <!--- asta iti va face un REDIRECT catre PAGINA='register/' -->
-        <p>Don't have an ccount ? Create one <a href="register/">here</a></p>
-    </form>
-</div>
-
+            <input type="submit" value="Login">
+            <!-- cand apesi Login > se va trimit REQUEST POST de la
+            <form method="POST" action="{% url 'login' %}"> -->
+            
+            
+            
+            <!--- asta iti va face un REDIRECT catre PAGINA='register/' -->
+            <p>Don't have an ccount ? Create one <a href="{% url 'register' %}">here</a></p>
+        </form>
+    </div>
 </body>
 </html>

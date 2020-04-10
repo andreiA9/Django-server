@@ -4,11 +4,10 @@ body {
                                 < pentru 50vh o sa il puna la mijlocul jumatatii de FEREASTRA */
     display: flex;
     justify-content: center;    /* center horrizontally */
-    align-items: center;        /* center vertically */
 }
 
-.input[type=text], .input[type=password] {
-    width: 100%;
+input[type=text], input[type=password] {
+    width: 40%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -17,8 +16,8 @@ body {
     box-sizing: border-box;
 }
 
-.input[type=submit] {
-    width: 100%;
+input[type=submit] {
+    width: 40%;
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
@@ -28,11 +27,11 @@ body {
     cursor: pointer;
 }
 
-.input[type=submit]:hover {
+input[type=submit]:hover {
     background-color: #45a049;
 }
 
-.div {
+div {
     border-radius: 5px;
     background-color: #f2f2f2;
     padding: 20px;
