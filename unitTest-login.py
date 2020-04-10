@@ -27,75 +27,90 @@ pentru login se va proceda in felul urmator:
 
 
 loginUrl = 'http://127.0.0.1:8000/customlogin/'
-cj = CookieJar()
 
 
-def setupHttpHandler():
-    opener = build_opener(HTTPCookieProcessor(cj), HTTPHandler())
-    install_opener(opener)
+class HttpPacketHandler:
+    def __init__(self, url):
+        self.cookies = CookieJar()
+        self.url = url
 
-def httpGet(url):
-    # GET
-    response = urlopen(url).read()
+    def setup(self):
+        opener = build_opener(HTTPCookieProcessor(self.cookies), HTTPHandler())
+        install_opener(opener)
 
-    responseString = response.decode("utf-8") 
-    print(responseString)
+    def get(self):
+        # GET
+        response = urlopen(self.url).read()
 
-    return responseString
+        responseString = response.decode("utf-8")
+        print("RESPONSE \n")
+        print(responseString)
 
-def httpPost(url, payload):
-    # PREPARE payload for POST
-    data = urllib.parse.urlencode(payload).encode("utf-8")
-    req = Request(url = url, data = data)
+        return responseString
 
-    # POST
-    responsePost = urlopen(req).read()
-    responseString = responsePost.decode("utf-8") 
-    print(responseString)
+    def post(self, payload):
+        # PREPARE payload for POST
+        data = urllib.parse.urlencode(payload).encode("utf-8")
+        req = Request(url = self.url, data = data)
 
-def printCookies():
-    print("the cookies are: ")
-    for cookie in cj:
-        print(cookie.name, cookie.value, cookie.domain)
+        # POST
+        responsePost = urlopen(req).read()
+        responseString = responsePost.decode("utf-8")
+        
+        print("RESPONSE \n")
+        print(responseString)
+    
+    def setUrl(self, url):
+        self.url = url
 
-def extractMiddlewareToken(responseString, tokenString):
-    tokenValueSubstr = ''
-    tokenPos = responseString.find(tokenString)
+    def printCookies(self):
+        print("\nthe cookies are: ")
+        for cookie in self.cookies:
+            print(cookie.name, cookie.value, cookie.domain)
+        print("\n")
 
-    valueString = "value=\""
-    valuePos = responseString.find(valueString, tokenPos)
-    valueLen = len(valueString)
+    def extractMiddlewareToken(self, responseString, tokenString):
+        tokenValueSubstr = ''
+        tokenPos = responseString.find(tokenString)
 
-    if tokenPos and valuePos:
-        tokenValuePos = valuePos + valueLen
-        endOfTokenValue = responseString.find("\"", tokenValuePos)
-        tokenValueSubstr = responseString[tokenValuePos : endOfTokenValue]
+        valueString = "value=\""
+        valuePos = responseString.find(valueString, tokenPos)
+        valueLen = len(valueString)
 
-    return tokenValueSubstr
+        if tokenPos and valuePos:
+            tokenValuePos = valuePos + valueLen
+            endOfTokenValue = responseString.find("\"", tokenValuePos)
+            tokenValueSubstr = responseString[tokenValuePos : endOfTokenValue]
 
-def composePayload(responseString):
-    tokenString = 'csrfmiddlewaretoken'
-    tokenValueSubstr = extractMiddlewareToken(responseString, tokenString)
-    print("AICI", tokenValueSubstr)
+        return tokenValueSubstr
 
-    payload = {'username' : 'andrei',
-            'password' : '00aaa!!!' }
-    payload[tokenString] = tokenValueSubstr
+    def composePayload(self, responseString):
+        tokenString = 'csrfmiddlewaretoken'
+        tokenValueSubstr = self.extractMiddlewareToken(responseString, tokenString)
+        print("MIDDLEWARE-TOKEN")
+        print("csrfmiddlewaretoken", tokenValueSubstr)
+        print("\n")
 
-    return payload
+        payload = {'username' : 'andrei',
+                'password' : '00aaa!!!' }
+        payload[tokenString] = tokenValueSubstr
+
+        return payload
 
 
 if __name__ == "__main__":
-    setupHttpHandler()
+    httpHandler = HttpPacketHandler(loginUrl)
 
-    responseString = httpGet(loginUrl)
+    httpHandler.setup()
 
-    printCookies()
+    responseString = httpHandler.get()
+
+    httpHandler.printCookies()
 
     try:
-        payload = composePayload(responseString)
+        payload = httpHandler.composePayload(responseString)
 
-        httpPost(loginUrl, payload)
+        httpHandler.post(payload)
 
     except HTTPError as error:
         # Need to check its an 404, 503, 500, 403 etc.
