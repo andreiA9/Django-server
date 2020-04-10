@@ -34,11 +34,12 @@ ALLOWED_HOSTS = []
 # SETTING
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # USER AUTHENTICATION < added automatically
+    'django.contrib.auth',
     'rest_framework',       # FOR DJANGO REST FRAMEWORK
     # for token authentication
     'rest_framework.authtoken',

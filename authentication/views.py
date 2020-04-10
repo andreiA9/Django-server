@@ -5,20 +5,30 @@ from django.http import HttpResponse
 # @csrf_exempt
 from django.views.decorators.csrf import csrf_exempt
 
+
+
+# from HERE LOGIN
+
 # LOGIN-VIEW
 from django.contrib.auth.views import LoginView
+
+# LOGIN
+from django.contrib.auth import login
+
+# LOGOUT
+from django.contrib.auth import logout
 
 # REGISTRATION
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
-from django.contrib.auth import login
+
+# LOGIN REQUIRED
+from django.contrib.auth.decorators import login_required
 
 
 
 class MyLoginView(LoginView):
 	member = "mama"
-
-
 
 
 class CustomLoginView(LoginView):
@@ -47,6 +57,26 @@ class CustomLoginView(LoginView):
         else:
             return HttpResponse(status = 403)
 
+
+# EXPLICATIILE pentru asta le vei gasi un urls.py la path('login/')
+@login_required()
+def tryLogin(request):
+    return HttpResponse("<h1>You need to be logged in to view this page!</h1>")
+
+
+# nu denumi sub nicio FORMA FUNCTIA ca fiind
+# def logout(request):
+# < pentru ca faci override la FUNCTIA logout() a lui Django
+def logoutUser(request):
+    if request.method == 'GET':
+        return render(request, 'logout.html')
+
+    elif request.method == 'POST':
+        # aici nu trebuie sa dai PARAMETRU=USER ul pe care trebuie sa
+        # il delogheze<pentru ca Django stie ca USER este acum actual
+        logout(request)
+
+        return HttpResponse("<h1>You have been logged out!</h1>")
 
 
 

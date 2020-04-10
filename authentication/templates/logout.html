@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Index Page</title>
+</head>
+<body>
+    <h1>This is the logout page!</h1>
+    <!-- action="{}" < inseamna ca ACTIUNEA este de la Django = adica 
+    path('logout/', views.logout, name="logout"),
+    name = 'logout' == action="{% url 'logout' %}" -->
+    <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+
+        <!-- ASTA este mai SIMPLU
+        <button type="submit">Logout</button> -->
+
+        <!-- aici daca este LOGAT > iti va arata BUTONUL=SUBMIT
+        else daca esti DELOGAT > iti va arata 'Login here' -->
+        {% if user.is_authenticated %}
+            <button type="submit">Logout</button>
+        {% else %}
+            <a href="login/">Login here</a>
+        {% endif %}
+    </form>
+</body>
+</html>

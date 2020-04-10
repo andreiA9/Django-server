@@ -50,7 +50,17 @@ div {
         
         <input type="submit" value="Login">
     </form>
+     |
+    \ /
+    a fost INLOCUIT cu ce este mai jos<
+    pentru ca nu poti sa transmiti
+    form.username
+    form.password
+    la COD=DJANGO
     -->
+
+
+
     <!-- action="{}" < inseamna ca ACTIUNEA este de la Django = adica 
     path('login/', views.CustomLoginView.as_view(), name = 'login'),
     name = 'login' == action="{% url 'login' %}" -->
@@ -72,11 +82,14 @@ div {
         <!--  <label>Password</label>   -->
         <!--  <input type="password">   -->
 
-        {% if next %}   <!-- adica daca ai un LOGIN_REDIRECT_URL -->
-        <p>You cannot acces that page</p>
-        {% endif %}
-
         <input type="submit" value="Login">
+        <!-- cand apesi Login > se va trimit REQUEST POST de la
+        <form method="POST" action="{% url 'login' %}"> -->
+        
+        
+        
+        <!--- asta iti va face un REDIRECT catre PAGINA='register/' -->
+        <p>Don't have an ccount ? Create one <a href="register/">here</a></p>
     </form>
 </div>
 

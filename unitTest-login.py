@@ -26,27 +26,27 @@ pentru login se va proceda in felul urmator:
 """
 
 
-
 loginUrl = 'http://127.0.0.1:8000/customlogin/'
 cj = CookieJar()
+
 
 def setupHttpHandler():
     opener = build_opener(HTTPCookieProcessor(cj), HTTPHandler())
     install_opener(opener)
 
-def httpGet():
+def httpGet(url):
     # GET
-    response = urlopen(loginUrl).read()
+    response = urlopen(url).read()
 
     responseString = response.decode("utf-8") 
     print(responseString)
 
     return responseString
 
-def httpPost(payload):
+def httpPost(url, payload):
     # PREPARE payload for POST
     data = urllib.parse.urlencode(payload).encode("utf-8")
-    req = Request(url = loginUrl, data = data)
+    req = Request(url = url, data = data)
 
     # POST
     responsePost = urlopen(req).read()
@@ -56,11 +56,10 @@ def httpPost(payload):
 def printCookies():
     print("the cookies are: ")
     for cookie in cj:
-        print(cookie)
+        print(cookie.name, cookie.value, cookie.domain)
 
 def extractMiddlewareToken(responseString, tokenString):
     tokenValueSubstr = ''
-    tokenString = 'csrfmiddlewaretoken'
     tokenPos = responseString.find(tokenString)
 
     valueString = "value=\""
@@ -89,14 +88,14 @@ def composePayload(responseString):
 if __name__ == "__main__":
     setupHttpHandler()
 
-    responseString = httpGet()
+    responseString = httpGet(loginUrl)
 
     printCookies()
 
     try:
         payload = composePayload(responseString)
 
-        httpPost(payload)
+        httpPost(loginUrl, payload)
 
     except HTTPError as error:
         # Need to check its an 404, 503, 500, 403 etc.
