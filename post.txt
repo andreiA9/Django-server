@@ -1,0 +1,18 @@
+POST ul se va face asa
+ < se va sterge ID
+
+{
+	"title": "Title1",
+	"author": "Andrei",
+	"email": "andrei@yahoo.com",
+	"date": "2020-04-04T01:00:09.446819Z"
+}
+
+
+SAU asa > incat vei primi o DATA.de la MOMENTUL
+cand ai facut POST
+{
+	"title": "Title1",
+	"author": "Andrei",
+	"email": "andrei@yahoo.com",
+}

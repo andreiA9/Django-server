@@ -28,6 +28,10 @@ from rest_framework.permissions import IsAuthenticated			# PERMISSIONS
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated			# PERMISSIONS
 
+# VIEWSETS
+from rest_framework import viewsets
+from django.shortcuts import get_object_or_404
+
 
 # article_list with FUNCTION
 # JSONParser().parse(request)	----------------|
@@ -290,3 +294,56 @@ class GenericApiView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Crea
 	
 	def detele(self, request, id = None):
 		return self.destroy(request, id)
+
+
+# VIEWSET ul este GRESIT < ai facut exact ca in TUTORIAL
+# < se recomanda sa nu modifici int=pk
+
+# a VIEWSET will not contain[GET/POST]
+# but it will only contain[list/create/retrieve/update]
+# you don't have a DELETE
+class ArticleViewSet(viewsets.ViewSet):
+	member = 'mama'
+
+	# GET pe
+	# http://127.0.0.1:8000/viewset/article/
+	def list(self, request):
+		articles = Article.objects.all()
+		serializer = ArticleSerializer(articles, many = True)
+		return Response(serializer.data)
+	
+	# POST pe
+	# http://127.0.0.1:8000/viewset/article/
+	def create(self, request):
+		serializer = ArticleSerializer(data = request.data)
+
+		if(serializer.is_valid):
+			serializer.save()
+			return Response(serializer.data, status = status.HTTP_201_CREATED)
+		
+		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+	
+	# GET pe
+	# http://127.0.0.1:8000/viewset/article/2/
+	def retrieve(self, request, pk = None):
+		querySet = Article.objects.all()
+		article = get_object_or_404(querySet, pk = pk)
+
+		serializer = ArticleSerializer(data = article)
+
+		if(serializer.is_valid()):
+			return Response(serializer.data)
+		
+		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+	
+	# PUT pe
+	# http://127.0.0.1:8000/viewset/article/2/
+	def update(self, request, pk = None):
+		article = Article.objects.get(pk = pk)
+		serializer = ArticleSerializer(article, data = request.data)
+		
+		if(serializer.is_valid()):
+			serializer.save()
+			return Response(serializer.data)
+		
+		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)

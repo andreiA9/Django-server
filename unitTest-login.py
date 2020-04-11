@@ -11,6 +11,14 @@ from urllib.request import HTTPHandler
 # COOKIES
 from http.cookiejar import CookieJar
 
+""" EXPLICATII AUTENTIFICARE
+0=la LOGIN imediat ce apesi BUTON=SUBMIT>se vor trimite
+ CREDENTIALE=DATELE.de AUTENTFICARE[username/password]
+1=la LOGIN in FORM care contine SUBMIT este specificata
+ METODA="POST"<prin care sunt trimise DATELE pentru
+ AUTENTIFICARE)-(DATELE sunt trimise exact ca mai jos)
+"""
+
 
 """ !!!! INSTRUCTIUNI
 vezi in capture - POST.png

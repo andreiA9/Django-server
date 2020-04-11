@@ -1,0 +1,3 @@
+username: andrei
+password: 00aaa!!!
+email: andrei_andreescu@24yahoo.com
