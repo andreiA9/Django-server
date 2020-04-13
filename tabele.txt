@@ -1,0 +1,6 @@
+AICI ai TABELELE
+http://127.0.0.1:8000/admin/
+
+TABLE = Article         < http://127.0.0.1:8000/admin/api_basic/article/
+TABLE = Users           < http://127.0.0.1:8000/admin/auth/user/
+TABLE = Groups          < http://127.0.0.1:8000/admin/auth/group/

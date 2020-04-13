@@ -15,10 +15,12 @@ from .models import Article
 #         return Article.objects.create(validated_data)
     
 #     def update(self, instance, validated_data):
-#         instance.title = validated_data.get("title", instance.title)
+#         self.title = validated_data.get("title", instance.title)
 #         instance.author = validated_data.get("author", instance.author)
 #         instance.email = validated_data.get("email", instance.email)
+
 #         instance.save()
+
 #         return instance
 
 # CLASA.de mai sus se simplifica la a scrie clasa de mai jos

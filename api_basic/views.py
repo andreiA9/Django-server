@@ -236,7 +236,7 @@ class ArticleDetailApiView(APIView):
 		if serializer.is_valid():
 			serializer.save()
 			return Response(serializer.data, status = status.HTTP_201_CREATED)
-									# STATUS = 201 < 'created'
+									# STATUS = 201 < 'Created'
 		
 		return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 									# STATUS = 400 < 'Bad Request'
@@ -303,7 +303,6 @@ class GenericApiView(generics.GenericAPIView, mixins.ListModelMixin, mixins.Crea
 # but it will only contain[list/create/retrieve/update]
 # you don't have a DELETE
 class ArticleViewSet(viewsets.ViewSet):
-	member = 'mama'
 
 	# GET pe
 	# http://127.0.0.1:8000/viewset/article/

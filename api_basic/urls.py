@@ -35,6 +35,9 @@ urlpatterns = [
 	# http://127.0.0.1:8000/genericapi/v1/detail/1/ < da 1ELEMENT
 	path('genericapi/v1/detail/<int:id>/', GenericApiView.as_view()),
 	# 4 = VIEWSETS
-	path('viewset/', include(router.urls)),
-	path('viewset/<int:pk>/', include(router.urls)),
+	# NOT WORKING < vezi in COD												URL ul va deveni 'viewset/' + 'article' < la care ai facut REGISTER
+	# router.register('article', ArticleViewSet, basename = 'article') <------------------------|
+																							#	|
+	path('viewset/', include(router.urls)),					# -> DEVINE http://127.0.0.1:8000/viewset/article/
+	path('viewset/<int:pk>/', include(router.urls)),		# -> DEVINE http://127.0.0.1:8000/viewset/article/1/
 ]
