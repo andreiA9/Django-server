@@ -1,2 +1,1 @@
-register username: andrei 
-register password: 00aaa!!! 
+serializer.data (JSON): {"id": 1, "title": "Title1", "author": "Andrei", "email": "andrei@yahoo.com", "date": "2020-04-04T01:00:09.446819Z"}

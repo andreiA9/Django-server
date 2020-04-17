@@ -27,4 +27,5 @@ urlpatterns = [
 	path('', include('api_basic.urls')),
     # here '' = ROOT < toate vor fi sub ROOT
     path('', include('authentication.urls')),
+    path('', include('database_view.urls')),
 ]

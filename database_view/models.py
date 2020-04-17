@@ -10,16 +10,11 @@ IAR tot FLOW ul in SQL il vei vedea in FISIERUL = SQL - example database queries
 
 
 
-class Item(models.Model):
-    id = models.IntegerField(primary_key = True)
-    title = models.CharField(max_length = 100)
-    description = models.CharField(max_length = 500)
-
-
 class Company(models.Model):
     id = models.IntegerField(primary_key = True)
     name = models.CharField(max_length = 20)
-    description = models.CharField(max_length = 500)
+    location = models.CharField(max_length = 20)
+    date_created = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.name
@@ -33,6 +28,7 @@ a PROGRAMMER can be related to a single-COMPANY
 class Programmer(models.Model):
     id = models.IntegerField(primary_key = True)
     name = models.CharField(max_length = 20)
+    age = models.IntegerField()
     company = models.ForeignKey(Company, on_delete = models.CASCADE)
                                 # on_delete = THIS MEANS that when DELETING the COMPANY >
                                 # it will need to CASCADE and PROGRAMMERS also
@@ -50,6 +46,13 @@ class Language(models.Model):
     id = models.IntegerField(primary_key = True)
     name = models.CharField(max_length = 20)
     programmers = models.ManyToManyField(Programmer)
+    date_created = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.name
+
+
+class Item(models.Model):
+    id = models.IntegerField(primary_key = True)
+    title = models.CharField(max_length = 100)
+    description = models.CharField(max_length = 500)
