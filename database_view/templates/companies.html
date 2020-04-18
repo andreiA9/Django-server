@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- <title>{% block title %}Django Auth Tutorial{% endblock %}</title> -->
+  <title>Comanies</title>
+</head>
+<body>
+  <main>
+      <h1>Companies page.</h1>
+      
+      {% for company in companies %}
+      <h2>{{ company.name }}</h2>
+      <p>{{ company.location }}</p>
+      <p>{{ company.date_created }}</p>
+      {% endfor %}
+
+  </main>
+</body>
+</html>

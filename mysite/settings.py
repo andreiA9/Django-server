@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'api_basic',
     'authentication',
     'database_view',
+    'staff-admin',
 ]
 
 

@@ -9,6 +9,12 @@ IAR tot FLOW ul in SQL il vei vedea in FISIERUL = SQL - example database queries
 """
 
 
+# GLOBAL VARIABLES
+g_COMPANY_INTEL = 0
+g_COMPANY_APPLE = 1
+g_COMPANY_MICROSOFT = 2
+
+
 
 class Company(models.Model):
     id = models.IntegerField(primary_key = True)
@@ -52,7 +58,24 @@ class Language(models.Model):
         return self.name
 
 
-class Item(models.Model):
-    id = models.IntegerField(primary_key = True)
-    title = models.CharField(max_length = 100)
-    description = models.CharField(max_length = 500)
+
+
+# OBJECT MANAGER for INTEL
+class IntelManager(models.Manager):
+    def get_queryset(self):
+        companies = Company.objects.all()
+        return companies[g_COMPANY_INTEL].programmer_set.all()
+
+
+# OBJECT MANAGER for APPLE
+class AppleManager(models.Manager):
+    def get_queryset(self):
+        companies = Company.objects.all()
+        return companies[g_COMPANY_APPLE].programmer_set.all()
+
+
+# OBJECT MANAGER for MICROSOFT
+class MicrosoftManager(models.Manager):
+    def get_queryset(self):
+        companies = Company.objects.all()
+        return companies[g_COMPANY_MICROSOFT].programmer_set.all()
